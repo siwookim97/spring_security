@@ -20,11 +20,10 @@ public class PrincipalDetailsService implements UserDetailsService {
     // SecurityConfig에서 .usernameParameter("username2");로 바꿔주어야 한다.
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User userEntity = userRepository.findByUsername(username);
-        if (userEntity != null) {
-            return new PrincipalDetails(userEntity);
-            // return 된 값이 security session ((Authentication (UserDetails)) 이렇게 들어가고 로그인이 된다.
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            return null;
         }
-        return null;
+        return new PrincipalDetails(user);
     }
 }

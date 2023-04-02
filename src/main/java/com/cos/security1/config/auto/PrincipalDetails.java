@@ -16,25 +16,12 @@ import java.util.Collection;
 // Security Session -> Authentication -> UserDetails (User 객체에 접근 가능)
 
 
-public class PrincipalDetails implements UserDetails  {
+public class PrincipalDetails implements UserDetails {
 
     private User user; // 컴포지션
 
     public PrincipalDetails(User user) {
         this.user = user;
-    }
-
-    // 해당 User의 권한을 리턴하는 곳
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> collect = new ArrayList<>();
-        collect.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return user.getRole();
-            }
-        });
-        return collect;
     }
 
     @Override
@@ -70,5 +57,15 @@ public class PrincipalDetails implements UserDetails  {
         // user.getLoginDate(); 로그인 시간을 가져와서
 
         return true;
+    }
+
+    // 해당 User의 권한을 리턴하는 곳
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection<GrantedAuthority> collect = new ArrayList<>();
+        collect.add(() -> {
+            return user.getRole();
+        });
+        return collect;
     }
 }
