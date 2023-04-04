@@ -1,21 +1,22 @@
 package com.cos.security1.config.auto;
 
 import com.cos.security1.model.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-// 시큐리티가 /login을 주소 요청이 오면 낚아채서 로그인을 진행시킴
-// 로그인 진행이 완료가 되면 session을 만들어준다. (Security ContextHolder 에다가 session)
+// 시큐리티가 /login 을 주소 요청이 오면 낚아채서 로그인을 진행시킴
+// 로그인 진행이 완료가 되면 session 을 만들어준다. (Security ContextHolder 에다가 session)
 // Authentication 타입의 객체만 들어갈 수 있다
 // Authentication 안에 User 정보가 있어야 된다.
 // User 객체타입 -> UserDetails 타입 객체
 
 // Security Session -> Authentication -> UserDetails (User 객체에 접근 가능)
 
-
+@Data
 public class PrincipalDetails implements UserDetails {
 
     private User user; // 컴포지션
